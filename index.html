@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ญี่ปุ่น 2026">
+<title>ญี่ปุ่น 7–14 พ.ย. 2569</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
+<style>
+/* แนวคิด "ป้ายสถานี": ทั้งทริปคือสายรถไฟหนึ่งสาย แต่ละวันคือสถานี มีสีประจำสาย (--line เปลี่ยนตามวัน) */
+:root{--concrete:#e6e8eb;--sign:#fff;--ink:#1b1e24;--ink2:#545b68;--rule:#d3d7dd;--line:#2b5fa8;--suica:#16864b;--warn:#b26b00;--warn-bg:#fff3dc}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--concrete);color:var(--ink);font:16px/1.6 "IBM Plex Sans Thai","Thonburi",system-ui,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--line);outline-offset:2px}
+a{color:var(--line)}
+.page{display:none}.page.on{display:block}
+main{padding:0 12px;max-width:640px;margin:0 auto}
+h2{font-size:18px;margin:24px 2px 10px;display:flex;align-items:center;gap:8px;line-height:1.3}
+h2::before{content:"";flex:0 0 6px;height:18px;background:var(--line);border-radius:2px}
+.muted{color:var(--ink2)}.small{font-size:13px}
+.panel{background:#fff;border-radius:6px;padding:12px 14px}
+
+.board{background:var(--sign);padding:16px 16px 0;border-bottom:1px solid var(--rule);text-align:center}
+.board .meta{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:13px;color:var(--ink2)}
+.badge{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:4px solid var(--line);display:grid;place-items:center;font:900 14px/1 "Zen Kaku Gothic New",sans-serif;background:#fff;color:var(--ink)}
+.board h1{margin:8px 0 0;font:900 clamp(44px,15vw,64px)/1 "Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;letter-spacing:.06em}
+.board .th{font-weight:700;font-size:22px;margin-top:6px;line-height:1.2}
+.board .ro{color:var(--ink2);font-size:14px}
+.rail{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin:14px -16px 0;background:var(--line);color:#fff;font-weight:700;font-size:14px}
+.rail span{padding:9px 12px;text-align:left}.rail span:last-child{text-align:right}
+.rail b{background:#fff;color:var(--line);padding:2px 10px;border-radius:99px;font-size:12px;white-space:nowrap}
+.days{display:flex;gap:6px;overflow-x:auto;padding:12px;scrollbar-width:none;position:sticky;top:0;z-index:5;background:var(--concrete)}
+.days::-webkit-scrollbar{display:none}
+.days button{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:5px 11px 5px 5px;border-radius:99px;background:#fff;border:1px solid var(--rule);font-size:13px;font-weight:500;cursor:pointer}
+.days button i{width:24px;height:24px;border-radius:50%;border:3px solid var(--c);display:grid;place-items:center;font:900 10px/1 "Zen Kaku Gothic New",sans-serif;font-style:normal;background:#fff;color:var(--ink)}
+.days button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.days button.today{box-shadow:0 0 0 2px var(--c)}
+
+.photo{position:relative;margin:0;border-radius:6px;overflow:hidden;background:#cfd3d9;aspect-ratio:3/2}
+.photo img,.photo svg{width:100%;height:100%;object-fit:cover;display:block}
+.photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 8px;background:linear-gradient(transparent,rgba(0,0,0,.62));color:#fff;font-size:11px}
+.note{margin-top:12px;background:var(--warn-bg);color:#5a3d00;border-radius:6px;padding:10px 12px;font-size:14px}
+
+.stops{list-style:none;margin:0;padding:8px 12px;background:#fff;border-radius:6px}
+.stops li{display:grid;grid-template-columns:48px 20px 1fr;gap:6px}
+.stops .t{font-weight:700;font-size:14px;padding-top:2px;font-variant-numeric:tabular-nums}
+.stops .dot{position:relative}
+.stops .dot::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:4px;background:var(--line)}
+.stops li:first-child .dot::before{top:10px}.stops li:last-child .dot::before{bottom:auto;height:10px}
+.stops li:only-child .dot::before{display:none}
+.stops .dot::after{content:"";position:absolute;left:3px;top:4px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--line)}
+.stops li.key .dot::after{background:var(--line)}
+.stops .w{padding-bottom:12px;min-width:0}
+.stops .w b{display:block;line-height:1.35}
+.stops .w small{color:var(--ink2);font-size:13px;display:block;line-height:1.5}
+.tix{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:12px;font-weight:700;background:color-mix(in srgb,var(--line) 14%,#fff);color:var(--line);padding:3px 9px;border-radius:4px;border:0;cursor:pointer}
+
+.cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 12px 4px;scrollbar-width:none;margin:0 -12px}
+.cards::-webkit-scrollbar{display:none}
+.card{flex:0 0 76%;max-width:300px;scroll-snap-align:start;background:#fff;border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.card .pic{aspect-ratio:16/10;background:#dfe2e6}
+.card .pic img,.card .pic svg{width:100%;height:100%;object-fit:cover;display:block}
+.card .body{padding:10px 12px 12px;flex:1;display:flex;flex-direction:column}
+.card b{display:block;line-height:1.35}.card small{color:var(--ink2);font-size:13px}
+.card .acts{margin-top:auto;padding-top:8px;display:flex;gap:16px}
+.card .acts a,.card .acts button{background:none;border:0;padding:0;font-weight:700;font-size:14px;color:var(--line);text-decoration:none;cursor:pointer}
+.foods{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.food{background:#fff;border-radius:6px;overflow:hidden;text-decoration:none;color:var(--ink);display:block}
+.food .pic{aspect-ratio:4/3;background:color-mix(in srgb,var(--line) 12%,#fff);display:grid;place-items:center;font-size:34px}
+.food .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.food .tx{padding:8px 10px}.food b{display:block;font-size:14px;line-height:1.3}.food small{font-size:12px;color:var(--ink2)}
+
+.map{border-radius:6px;overflow:hidden;background:#fff}
+.map iframe{display:block;width:100%;height:240px;border:0;background:#dfe2e6}
+.map .cap{padding:8px 12px;font-size:13px;color:var(--ink2)}
+.btn{display:block;width:100%;text-align:center;padding:12px;font-weight:700;color:#fff;background:var(--line);text-decoration:none;border:0;border-radius:6px;cursor:pointer;font-size:15px}
+.map .btn{border-radius:0}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--rule)}
+.btn.red{background:#fff;color:#b3261e;border:1px solid #f0b8b3}
+.btn.green{background:var(--suica)}
+
+.docs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.doc{background:#fff;border-radius:6px;overflow:hidden;border:1px solid var(--rule);cursor:pointer;text-align:left;padding:0;width:100%}
+.doc .thumb{height:128px;background:repeating-linear-gradient(135deg,#eef0f3 0 8px,#f6f7f9 8px 16px);display:grid;place-items:center;font-size:28px}
+.doc .thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.doc span{display:block;padding:8px 10px;font-size:13px;font-weight:700;line-height:1.3}
+.doc span small{display:block;font-weight:400;color:var(--ink2)}
+.lock{background:#fff;border-radius:6px;padding:16px;display:grid;gap:10px}
+.lock input{padding:12px;border:1px solid var(--rule);border-radius:6px;font-size:20px;text-align:center;letter-spacing:.2em;width:100%}
+.err{color:#b3261e;font-size:14px;min-height:1.4em}
+.dgroup{margin:16px 2px 8px;font-weight:700;font-size:14px;color:var(--ink2)}
+
+.viewer{position:fixed;inset:0;background:#0d0f13;z-index:60;display:none;flex-direction:column}
+.viewer.on{display:flex}
+.viewer header{display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;color:#fff}
+.viewer header b{flex:1;font-size:16px;line-height:1.3}
+.viewer header button,.viewer header a{background:#2a2f3a;color:#fff;border:0;border-radius:99px;padding:7px 14px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap}
+.viewer .ref{color:#e6e8eb;font-size:14px;padding:0 14px 6px;user-select:text;-webkit-user-select:text}
+.viewer .use{color:#a9b0bd;font-size:13px;padding:0 14px 10px}
+.viewer .pages{flex:1;overflow:auto;padding:0 8px 16px;-webkit-overflow-scrolling:touch}
+.viewer .pages img{display:block;width:100%;max-width:820px;margin:0 auto 10px;background:#fff;border-radius:4px}
+
+.ic{background:linear-gradient(135deg,#1e9e5a,#0f6e3d);color:#fff;border-radius:14px;padding:16px;position:relative;overflow:hidden}
+.ic::after{content:"";position:absolute;right:-34px;top:-34px;width:150px;height:150px;border-radius:50%;border:18px solid rgba(255,255,255,.12);pointer-events:none}
+.ic .l{font-size:13px;opacity:.9}.ic .v{font-weight:700;font-size:36px;line-height:1.1;font-variant-numeric:tabular-nums}
+.ic .y{font-size:14px;opacity:.9;font-variant-numeric:tabular-nums}
+.ic .row{display:flex;justify-content:space-between;gap:10px;margin-top:12px;font-size:15px;border-top:1px solid rgba(255,255,255,.28);padding-top:10px}
+.ic .bar{height:6px;background:rgba(255,255,255,.25);border-radius:99px;margin-top:10px;overflow:hidden}.ic .bar i{display:block;height:100%;background:#fff}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.split .panel .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.split .panel.full{grid-column:1/-1}
+.cats .row{display:grid;grid-template-columns:118px 1fr 80px;gap:8px;align-items:center;font-size:14px;margin:6px 0}
+.cats .bar{height:8px;background:#eceef1;border-radius:99px;overflow:hidden}.cats .bar i{display:block;height:100%;background:var(--suica)}
+.cats .n{text-align:right;font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:0 0 auto;border:1px solid var(--rule);background:#fff;border-radius:99px;padding:4px 12px;font-size:13px;cursor:pointer}
+.chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.exp{list-style:none;margin:0;padding:0 12px;background:#fff;border-radius:6px}
+.exp li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #eceef1;cursor:pointer}
+.exp li.grp{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--ink2);cursor:default;padding:12px 0 4px}
+.exp li:first-child{border-top:0}
+.exp .ic2{font-size:20px;text-align:center}
+.exp .nm{font-weight:500;line-height:1.3}.exp .sub{font-size:12px;color:var(--ink2)}
+.exp .amt{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.exp .amt small{display:block;font-weight:400;font-size:12px;color:var(--ink2)}
+.exp li.plan .amt{color:var(--warn)}
+.fab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));height:52px;padding:0 20px;border-radius:99px;background:var(--suica);color:#fff;border:0;font-weight:700;font-size:16px;box-shadow:0 8px 20px -8px rgba(15,110,61,.7);cursor:pointer;z-index:20;display:none}
+body.money .fab{display:block}
+label{display:block;font-size:13px;color:var(--ink2);margin:10px 0 4px}
+input[type=text],input[type=number],select{width:100%;font-size:16px;padding:10px 12px;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:#fff}
+.seg button{flex:1;border:0;background:none;padding:9px 4px;font-size:14px;cursor:pointer;border-left:1px solid var(--rule)}
+.seg button:first-child{border-left:0}
+.seg button.on{background:var(--ink);color:#fff}
+.catpick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.catpick button{border:1px solid var(--rule);background:#fff;border-radius:6px;padding:6px 2px;font-size:12px;cursor:pointer}
+.catpick button span{display:block;font-size:20px}
+.catpick button.on{border-color:var(--suica);background:#e3f3ea;color:var(--suica);font-weight:700}
+dialog{border:0;border-radius:14px;padding:0;width:min(520px,94vw);max-height:92vh}
+dialog::backdrop{background:rgba(13,15,19,.55)}
+dialog form{padding:16px}
+dialog h3{margin:0 0 4px;font-size:18px}
+.acts3{display:flex;gap:8px;margin-top:16px}.acts3 .btn{flex:1}
+
+.routemap{background:#fff;border-radius:6px;overflow:hidden}
+.routemap svg{display:block;width:100%;height:auto}
+.plist{list-style:none;margin:0;padding:0}
+.plist li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid #eceef1;font-size:15px}
+.plist li:first-child{border-top:0}
+.plist a{font-weight:700;text-decoration:none;white-space:nowrap;font-size:14px}
+.credits{font-size:11px;color:var(--ink2);line-height:1.6}
+.credits a{color:var(--ink2)}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:#fff;display:flex;border-top:1px solid var(--rule);padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:30}
+nav.tabs button{flex:1;background:none;border:0;font-size:12px;color:var(--ink2);cursor:pointer;padding:2px 0}
+nav.tabs svg{display:block;margin:0 auto 2px;width:22px;height:22px}
+nav.tabs button.on{color:var(--line);font-weight:700}
+.toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 16px;border-radius:99px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:70}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<section class="page on" id="pg-plan">
+  <header class="board" id="board"></header>
+  <div class="days" id="days"></div>
+  <main id="day"></main>
+</section>
+
+<section class="page" id="pg-money">
+  <main>
+    <h2>ค่าใช้จ่ายทริป</h2>
+    <div class="ic" id="ic"></div>
+    <div class="split" id="split"></div>
+    <h2>แยกตามหมวด</h2>
+    <div class="panel cats" id="cats"></div>
+    <h2>รายการ</h2>
+    <div class="chips" id="chips"></div>
+    <ul class="exp" id="exp"></ul>
+    <p class="small muted" style="text-align:center">แตะรายการเพื่อแก้ไข</p>
+    <h2>ตั้งค่า</h2>
+    <div class="panel">
+      <div class="row2"><div><label for="sA">ชื่อคนที่ 1</label><input type="text" id="sA"></div><div><label for="sB">ชื่อคนที่ 2</label><input type="text" id="sB"></div></div>
+      <div class="row2"><div><label for="sRate">1 เยน = กี่บาท</label><input type="number" id="sRate" step="0.0001" inputmode="decimal"></div><div><label for="sBud">งบรวม (บาท)</label><input type="number" id="sBud" inputmode="numeric" placeholder="ไม่บังคับ"></div></div>
+      <p class="small muted">เรตเริ่มต้น 0.22 เป็นค่าประมาณ แก้ให้ตรงกับเรตที่แลกหรือที่บัตรตัดจริง</p>
+      <button class="btn" id="sSave">บันทึกการตั้งค่า</button>
+    </div>
+    <h2>สำรองข้อมูล</h2>
+    <div class="panel">
+      <p class="small muted" style="margin-top:0">ค่าใช้จ่ายที่จดไว้อยู่ในเครื่องนี้เท่านั้น ไม่ได้ส่งขึ้นเว็บ ถ้าจดคนละเครื่อง ให้ส่งไฟล์สำรองให้กันแล้วกด "นำเข้า"</p>
+      <div class="row2"><button class="btn ghost" id="bCsv">ส่งออก CSV</button><button class="btn ghost" id="bJson">ส่งออกไฟล์สำรอง</button></div>
+      <div class="row2" style="margin-top:10px"><button class="btn ghost" id="bImp">นำเข้าไฟล์สำรอง</button><button class="btn red" id="bReset">ล้างข้อมูลทั้งหมด</button></div>
+      <input type="file" id="fImp" accept=".json,application/json" hidden>
+    </div>
+  </main>
+</section>
+
+<section class="page" id="pg-docs">
+  <main>
+    <h2>เอกสารจอง</h2>
+    <div id="docsBody"></div>
+  </main>
+</section>
+
+<section class="page" id="pg-map">
+  <main>
+    <h2>เส้นทางทั้งทริป</h2>
+    <div class="routemap" id="routemap"></div>
+    <div id="mapList"></div>
+    <h2>เครดิตภาพ</h2>
+    <p class="credits" id="credits"></p>
+  </main>
+</section>
+
+<button class="fab" id="fab">＋ จดค่าใช้จ่าย</button>
+
+<nav class="tabs">
+  <button data-pg="plan" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3h12v13H6zM6 11h12M9 16l-2 5M15 16l2 5"/></svg>แผน</button>
+  <button data-pg="money"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>ค่าใช้จ่าย</button>
+  <button data-pg="docs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4z"/></svg>เอกสาร</button>
+  <button data-pg="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/></svg>แผนที่</button>
+</nav>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="vTitle">
+  <header><b id="vTitle"></b><a id="vSave" download>บันทึกภาพ</a><button id="vClose">ปิด</button></header>
+  <div class="ref" id="vRef"></div>
+  <div class="use" id="vUse"></div>
+  <div class="pages" id="vPages"></div>
+</div>
+
+<dialog id="dlg">
+  <form method="dialog" id="fExp">
+    <h3 id="dTitle">จดค่าใช้จ่าย</h3>
+    <label for="eName">รายการ</label><input type="text" id="eName" required placeholder="เช่น ราเมงมื้อเย็น">
+    <div class="row2">
+      <div><label for="eAmt">จำนวนเงิน</label><input type="number" id="eAmt" inputmode="decimal" step="any" placeholder="0"></div>
+      <div><label>สกุลเงิน</label><div class="seg" id="eCur"><button type="button" data-v="JPY">¥ เยน</button><button type="button" data-v="THB">฿ บาท</button></div></div>
+    </div>
+    <div class="small muted" id="eHint" style="margin-top:4px;min-height:1.4em"></div>
+    <label>หมวด</label><div class="catpick" id="eCat"></div>
+    <div class="row2">
+      <div><label for="eDate">วันที่</label><select id="eDate"></select></div>
+      <div><label>สถานะ</label><div class="seg" id="eStat"><button type="button" data-v="paid">จ่ายแล้ว</button><button type="button" data-v="plan">ยังไม่จ่าย</button></div></div>
+    </div>
+    <label>ใครจ่าย</label><div class="seg" id="ePayer"></div>
+    <label>เป็นค่าใช้จ่ายของใคร</label><div class="seg" id="eFor"></div>
+    <label for="eNote">หมายเหตุ</label><input type="text" id="eNote" placeholder="ไม่บังคับ">
+    <div class="acts3"><button type="button" class="btn red" id="eDel">ลบ</button><button type="button" class="btn ghost" id="eCancel">ยกเลิก</button><button type="submit" class="btn green">บันทึก</button></div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="data.js"></script>
+<script src="credits.js"></script>
+<script src="art.js"></script>
+<script src="docs.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
